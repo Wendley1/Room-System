@@ -1,15 +1,32 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR</title>
+
+    <link rel="stylesheet" th:href="@{/Bootstrap/Bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <main>
+        <section>
+            <article class="large-space-top d-flex align-items-center justify-content-center">
+                <div>
+                    <hr>
+                    <h1>404</h1>
+                    <p>
+                        Sala não encontrada ou registrada ;-; 
+                        <br>
+                        Tente outro codigo de acesso ou crie uma sala :D
+                    </p>
+                    <a th:href="@{/}"><button class="btn btn-primary">Voltar</button> </a>
+                    <a th:href="@{/sala/criar}"><button class="btn btn-secondary">Criar Sala</button></a>
+                    <hr>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
 </html>

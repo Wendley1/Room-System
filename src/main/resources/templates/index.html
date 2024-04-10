@@ -1,15 +1,33 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Sala</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/Bootstrap/Bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <script th:src="@{/JQuery/JQuery.js}"></script>
+</head>
+
+<body>
+    <main class="container">
+        <section>
+            <article class="large-space-top d-flex align-items-center justify-content-center">
+                <div>
+                    <form id="code-form">
+                        <label for="code">Digite o codigo da sala</label> <br>
+                        <input type="text" name="code" id="code" maxlength="6" minlength="6" placeholder="ABCDEF" required><br>
+                        <p class="text-danger"><span id="warning-text"></span></p>
+                        <input class="btn btn-primary" type="submit" value="Entrar">
+                    </form>              
+                    <hr>
+                    <a th:href="@{/sala/criar}"><button class="btn btn-secondary">Criar Sala</button></a>
+                </div>
+            </article>
+        </section>
+    </main>
+    <script th:src="@{/js/joinRoom.js}"></script>
+</body>
 </html>

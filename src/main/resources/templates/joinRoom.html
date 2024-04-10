@@ -1,15 +1,29 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Entrar Sala</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/Bootstrap/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <main>
+        <section>
+            <article class="large-space-top d-flex align-items-center justify-content-center">
+                <div>
+                    <form th:action="@{/sala/{roomCode}(roomCode=${room.code})}" method="POST">
+                        <label for="name">Nome</label> <br>
+                        <input type="text" name="user-name" id="name"><br><br>
+                        <input class="btn btn-primary" type="submit" value="Entrar">
+                    </form>
+                    <hr>
+                    <p>Participantes: <span th:text="${quantPartic}">0</span></p>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
 </html>
