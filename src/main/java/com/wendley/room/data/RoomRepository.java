@@ -31,6 +31,6 @@ public interface RoomRepository extends JpaRepository<RoomEntity, Integer> {
     public Integer removeUserFromRoom(@Param("userId") Integer userId, @Param("roomId") Integer roomId);
     
     @Transactional
-    @Query(nativeQuery = true, value = "select count(*) from user_room as us inner join room as r on us.room_id = r.id where r.code = ?1")
-    public Integer amountOfUserInRoom(String code);
+    @Query(nativeQuery = true, value = "select count(*) from user_room as us inner join room as r on us.room_id = r.id where r.id = ?1")
+    public Integer amountOfUserInRoom(Integer code);
 }

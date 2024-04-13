@@ -36,8 +36,8 @@ public class RoomService {
         return repository.findAll();
     }
     
-    public Integer getAmountOfUserInsideARoom(String roomCode){
-        return repository.amountOfUserInRoom(roomCode);
+    public Integer getAmountOfUserInsideARoom(Integer id){
+        return repository.amountOfUserInRoom(id);
     }
 
     public Boolean joinRoom(Integer userId, Integer roomId){      
