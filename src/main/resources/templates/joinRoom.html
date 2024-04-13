@@ -7,6 +7,10 @@
 
     <link rel="stylesheet" th:href="@{/Bootstrap/bootstrap.css}" />
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    
+    <script th:src="@{/JQuery/JQuery.js}"></script>
+    <script th:src="@{/SockJs/SockJs.min.js}"></script>
+    <script th:src="@{/Stomp/Stomp.min.js}"></script>
 </head>
 
 <body>
@@ -16,14 +20,16 @@
                 <div>
                     <form th:action="@{/sala/{roomCode}(roomCode=${room.code})}" method="POST">
                         <label for="name">Nome</label> <br>
-                        <input type="text" name="user-name" id="name"><br><br>
+                        <input type="text" name="user-name" id="name" required placeholder="Ex: Mario" maxlength="45"><br><br>
                         <input class="btn btn-primary" type="submit" value="Entrar">
+                        <input type="hidden" name="userId" id="room-code" th:value="${room.code}">
                     </form>
                     <hr>
-                    <p>Participantes: <span th:text="${quantPartic}">0</span></p>
+                    <p>Participantes: <span id="user-count" th:text="${userCount}">0</span></p>
                 </div>
             </article>
         </section>
+        <script th:src="@{/js/updateUserCount.js}"></script>
     </main>
 </body>
 </html>

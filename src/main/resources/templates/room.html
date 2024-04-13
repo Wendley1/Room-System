@@ -1,15 +1,39 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
+        <title>Sala</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" th:href="@{/Bootstrap/bootstrap.css}" />
+        <link rel="stylesheet" th:href="@{/css/style.css}" />
+    
+        <script th:src="@{/JQuery/JQuery.js}"></script>
+        <script th:src="@{/SockJs/SockJs.min.js}"></script>
+        <script th:src="@{/Stomp/Stomp.min.js}"></script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <main class="container">
+            <br>
+            <h1>Sala: <span id="room-code" th:text="${room.code}">xxxxxx</span></h1>
+            <hr>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-data">
+                    
+                </tbody>
+            </table>
+            <p>Numero de Participantes: <b><span id="user-count">xx</span></b></p>
+            <br>
+            <button class="btn btn-primary" onclick="onExit()">Sair</button>
+            <input type="hidden" id="user-id" th:value="${user.id}">
+            <script th:src="@{/js/roomManager.js}"></script>
+        </main>
     </body>
 </html>
