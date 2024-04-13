@@ -7,7 +7,7 @@ codeForm.addEventListener('submit', function (event) {
     let code = document.getElementById("code").value.toLocaleUpperCase();
 
     $.ajax({
-        url: 'sala/entrar',
+        url: 'api/sala/existe',
         type: 'POST',
         contentType: 'text/plain',
         data: code,
