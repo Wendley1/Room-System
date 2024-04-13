@@ -8,7 +8,7 @@ public class CodeGeneration {
     private static final String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static StringBuffer buffer;
 
-    public static String generateCodeRoomCode(Byte size) {
+    public static String generateRoomCode(Byte size) {
         buffer = new StringBuffer(size);
      
         for(Byte i = 0; i < size; i++){
