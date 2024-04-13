@@ -8,11 +8,10 @@ import com.wendley.room.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,12 +25,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/sala")
 public class RoomController {
-    
+
     @Autowired
     private RoomService roomService;
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
     
     @RequestMapping("/criar")
     public String createRoom(){
@@ -50,17 +52,7 @@ public class RoomController {
         
         roomService.createRoom(room);
         
-        return "redirect:/sala/" + room.getCode();
-    }
-    
-    @PostMapping("/entrar")
-    public ResponseEntity<Integer> reciveCode(@RequestBody String code){
-        RoomEntity room = roomService.findRoomByCode(code);
-        
-        if(room == null)
-            return new ResponseEntity<>(0,HttpStatus.OK);
-        
-        return new ResponseEntity<>(1,HttpStatus.OK);
+        return "redirect:/sala/entrar/" + room.getCode();
     }
     
     @RequestMapping("/entrar/{code}")
@@ -71,10 +63,33 @@ public class RoomController {
             return "roomNotFound";
         }
         
-        model.addAttribute("room", room);
-        model.addAttribute("quantPartic", userService.findAllUsersInRoom(room.getId()));
+        Integer userCount = roomService.getAmountOfUserInsideARoom(room.getId());
         
+        model.addAttribute("room", room);
+        model.addAttribute("userCount", userCount);
+        updateUsersCount(userCount,room.getCode());
         return "joinRoom";
+    }
+    
+    @PostMapping("/sair/{code}")
+    public String exitRoom(@PathVariable("code") String code, @RequestBody String userId){     
+        RoomEntity room = roomService.findRoomByCode(code);
+        
+        if(room == null){
+            return "roomNotFound";
+        }
+               
+        roomService.exitRoom(Integer.parseInt(userId), room.getId());
+        userService.deleteUser(Integer.parseInt(userId));
+        
+        Integer userCount = roomService.getAmountOfUserInsideARoom(room.getId());
+        
+        updateUsersCount(userCount,room.getCode());
+        
+        if(userCount <= 0)
+            roomService.deleteRoom(room.getId());
+        
+        return "redirect:/";
     }
     
     @PostMapping("/{code}")
@@ -96,6 +111,7 @@ public class RoomController {
         
         roomService.joinRoom(user.getId(), room.getId());
         
+        updateUsersCount(roomService.getAmountOfUserInsideARoom(room.getId()), room.getCode());
         return "redirect:/sala/" + roomCode;
     }
     
@@ -114,6 +130,12 @@ public class RoomController {
         model.addAttribute("user", user);
         model.addAttribute("room", room);
         
+        session.removeAttribute("current-user");
+        
         return "room";
+    }
+    
+    private void updateUsersCount(Integer userCount, String roomCode){
+        messagingTemplate.convertAndSend("/topic/" + roomCode, userCount);
     }
 }
